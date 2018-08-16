@@ -9,4 +9,3 @@
 <br>
 # Add Project
 ![Screenshot](Add_Project.png?raw=true "Add Project Screenshot")
-<br>
