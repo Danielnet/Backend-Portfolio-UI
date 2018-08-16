@@ -1,7 +1,6 @@
 # Portfolio Backend UI
 # A simple backend UI for adding new projects and skills to https://danielnet.github.io/portfolio/#/ .
 <br>
-<hr>
 # Dashboard
 ![Screenshot](Dashboard.png?raw=true "Dashboard Screenshot")
 <br>
