@@ -2,7 +2,7 @@
 # A simple backend UI for adding new projects and skills to https://danielnet.github.io/portfolio/#/ .
 # Dashboard
 <br>
-![Screenshot](Dashboard.png?raw=true "Dashboard Screenshot")
+[Link](Dashboard.png?raw=true "Dashboard Screenshot")
 # Add Skill
 <br>
 ![Screenshot](Add_Skill.png?raw=true "Add Skill Screenshot")
