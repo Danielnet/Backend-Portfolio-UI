@@ -3,8 +3,8 @@
 <br>
 <hr>
 # Dashboard
-![Screenshot](/Dashboard.png?raw=true "Dashboard Screenshot")
 <br>
+![Game Of Life Screenshot](/Dashboard.png?raw=true "Optional Title")
 <hr>
 # Add Skill
 ![Screenshot](/Add_Skill.png?raw=true "Add Skill Screenshot")
