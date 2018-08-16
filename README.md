@@ -1,6 +1,6 @@
 # Portfolio Backend UI
 # A simple backend UI for adding new projects and skills to https://danielnet.github.io/portfolio/#/ .
-# Dashboard
+Dashboard
 <br>
 ![Game Of Life Screenshot](/Dashboard.png?raw=true "Optional Title")
 # Add Skill
