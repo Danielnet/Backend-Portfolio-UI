@@ -11,30 +11,30 @@ const container = {
 };
 
 const head = {
-display:'flex',
-justifyContent:'center',
-flexDirection:'column',
-alignItems:'center',
+  display: 'flex',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  alignItems: 'center',
 
 };
 
 const avatar = {
-  height:'100px',
-  width:'100px',
-  marginTop:'30px'
+  height: '100px',
+  width: '100px',
+  marginTop: '30px'
 };
 
-const Menu= (props) =>
+const Menu = (props) =>
 
 
-<Paper style={container}>
-  <div style={head}>
-<Avatar alt="Remy Sharp" src={require('../img/avatar.png')} style={avatar}/>
-<h1>{props.title}</h1>
-</div>
-<Divider />
-<MenuList />
-</Paper>
+  <Paper style={container}>
+    <div style={head}>
+      <Avatar alt="Remy Sharp" src={require('../img/avatar.png')} style={avatar} />
+      <h1>{props.title}</h1>
+    </div>
+    <Divider />
+    <MenuList />
+  </Paper>
 
 
 export default Menu;

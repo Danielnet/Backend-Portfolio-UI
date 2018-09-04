@@ -8,10 +8,10 @@ const Style = {
   color: 'white',
 };
 
-const Header= (props) =>
-<Paper style={Style}>
-<h1>{props.title}</h1>
-</Paper>
+const Header = (props) =>
+  <Paper style={Style}>
+    <h1>{props.title}</h1>
+  </Paper>
 
 
 export default Header;

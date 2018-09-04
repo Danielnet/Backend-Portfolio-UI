@@ -1,12 +1,12 @@
-import React, { Component,Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Paper,Divider } from '@material-ui/core';
+import { Paper, Divider } from '@material-ui/core';
 
 
 const styles = {
   root: {
-    padding:"50px",
-    margin:"50px"
+    padding: "50px",
+    margin: "50px"
   },
   title: {
   },
@@ -16,13 +16,13 @@ const styles = {
 
 class TaskList extends Component {
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.updateTitle("@Todo List");
   }
 
 
 
-  render(){
+  render() {
     const { classes } = this.props;
 
     return <Fragment>
@@ -43,5 +43,5 @@ class TaskList extends Component {
 
 }
 
-// export default Posts;
+
 export default withStyles(styles)(TaskList);

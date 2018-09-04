@@ -35,19 +35,11 @@ grid-column-gap: 20px;
 
 .displayBox{
   padding:50px;
-  /* background-image: url("https://wallpaper-house.com/data/out/9/wallpaper2you_321372.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  color:white; */
 }
 
 .displayBox ul li{
   list-style:none;
 }
-
-/* .displayBox ul li:nth-child(-n+2){
-  text-decoration: line-through;
-} */
 
 .home-content{
 grid-area:c;
