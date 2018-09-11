@@ -7,7 +7,8 @@ import MenuList from './menuList';
 
 const container = {
   backgroundColor: 'rgb(10, 114, 135)',
-  color: 'white'
+  color: 'white',
+ 
 };
 
 const head = {

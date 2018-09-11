@@ -1,19 +1,21 @@
-import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Chip from '@material-ui/core/Chip';
-import Divider from '@material-ui/core/Divider';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import React, { Component } from 'react'
+import { withStyles } from '@material-ui/core/styles'
+import MenuItem from '@material-ui/core/MenuItem'
+import TextField from '@material-ui/core/TextField'
+import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import Button from '@material-ui/core/Button'
+import Chip from '@material-ui/core/Chip'
+import Divider from '@material-ui/core/Divider'
+import Snackbar from '@material-ui/core/Snackbar'
+import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
+import { connect } from 'react-redux'
+import { getApiDataAndSetState, addSkillOrProject } from '../actions'
+
 
 const fakeData = {
-  kompetanse: ["Html", "Css", "Javascript", "React.js", "Git Workflow"],
-  kunnskap: ["Photoshop", "UX"]
+  kompetanse: [],
+  kunnskap: []
 }
 
 
@@ -34,7 +36,7 @@ const styles = theme => ({
   button: {
     display: 'flex',
     alignItems: 'center',
-    marginRight: '10px'
+    marginLeft: '10px'
 
   },
   rightIcon: {
@@ -56,13 +58,13 @@ const styles = theme => ({
     width: theme.spacing.unit * 4,
     height: theme.spacing.unit * 4,
   },
-});
+})
 
 
 
 class Kompetanse extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       category: "",
       name: '',
@@ -70,37 +72,45 @@ class Kompetanse extends Component {
       formIsValid: "false",
       open: false
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.submitData = this.submitData.bind(this);
+    this.handleChange = this.handleChange.bind(this)
+    this.submitData = this.submitData.bind(this)
   }
 
 
   componentDidMount() {
-    this.props.updateTitle("Kompetanse");
+    this.props.getApiDataAndSetState()
+    console.log("state now", this.props.reduxState)
   }
 
   getFakeDataDisplay() {
+    //   console.log("state now",this.props.reduxState.kompetanse.length)
+    //   if (this.state.category === "Generell kunnskap") {
+    //     return <h2> {fakeData.kunnskap.map((chipname,index) => <Chip key={index} label={chipname} />)}</h2>
+    //   }
+    //   else
+    //     return <h2> {fakeData.kompetanse.map((chipname,index) => <Chip key={index} label={chipname} />)}</h2>
+    // }
     if (this.state.category === "Generell kunnskap") {
-      return <h2> {fakeData.kunnskap.map(chipname => <Chip label={chipname} />)}</h2>
+      return <h2> {this.props.reduxState.kunnskap.map((chipname, index) => <Chip key={index} label={chipname} />)}</h2>
     }
     else
-      return <h2> {fakeData.kompetanse.map(chipname => <Chip label={chipname} />)}</h2>
+      return <h2> {this.props.reduxState.kompetanse.map((chipname, index) => <Chip key={index} label={chipname} />)}</h2>
   }
 
 
   getValidationState() {
-    const length = this.state.name.length;
-    if (length > 10) return 'success';
-    else if (length > 5) return 'warning';
-    else if (length > 0) return 'error';
-    return null;
+    const length = this.state.name.length
+    if (length > 10) return 'success'
+    else if (length > 5) return 'warning'
+    else if (length > 0) return 'error'
+    return null
   }
 
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
-    });
-  };
+    })
+  }
 
 
   validateFormData(data) {
@@ -113,7 +123,7 @@ class Kompetanse extends Component {
 
 
   submitData(e) {
-    e.preventDefault();
+    e.preventDefault()
 
     const formData = {
       category: this.state.category,
@@ -122,28 +132,23 @@ class Kompetanse extends Component {
     }
     if (this.validateFormData(formData)) {
       this.setState({ open: true })
-      alert(
-        `Post Request : {
-        category: ${this.state.category},
-        name: ${this.state.name},
-        rank: ${this.state.rank}
-      }`)
     }
+    this.props.addSkillOrProject(formData)
   }
 
 
   handleClose = (event, reason) => {
     if (reason === 'clickaway') {
-      return;
+      return
     }
 
-    this.setState({ open: false });
-  };
+    this.setState({ open: false })
+  }
 
 
 
   render() {
-    const { classes } = this.props;
+    const { classes } = this.props
 
     return <div className={classes.root}>
       <h1>Add a new Skill</h1>
@@ -164,7 +169,7 @@ class Kompetanse extends Component {
             }}
             helperText="Velg Kompetanse"
             margin="normal"
-            required="true"
+            required={true}
           >
             <MenuItem key={1} value="Kjernekompetanse">
               Kjernekompetanse
@@ -183,7 +188,7 @@ class Kompetanse extends Component {
             value={this.state.name}
             onChange={this.handleChange('name')}
             margin="normal"
-            required="true"
+            required={true}
             type="text"
           />
 
@@ -204,10 +209,10 @@ class Kompetanse extends Component {
                 <CloudUploadIcon className={classes.rightIcon} />
             </Button>
 
-            <Button variant="contained" color="secondary" className={classes.button}>
+            {/* <Button variant="contained" color="secondary" className={classes.button}>
               Delete
                 <DeleteIcon className={classes.rightIcon} />
-            </Button>
+            </Button> */}
           </div>
 
 
@@ -222,7 +227,7 @@ class Kompetanse extends Component {
             ContentProps={{
               'aria-describedby': 'message-id',
             }}
-            message={<span id="message-id">{this.state.name} Skill Added</span>}
+            message={<span id="message-id">Add "{this.state.name}" Request Sent</span>}
             action={[
               <Button key="undo" color="secondary" size="small" onClick={this.handleClose}>
                 UNDO
@@ -241,16 +246,29 @@ class Kompetanse extends Component {
         </form>
       </div>
 
-
-      {(this.state.category) ? this.getFakeDataDisplay() : ""}
-
       <Divider />
+
       <div>
         <br />
-        <h2>{(this.state.name) ? "Add / delete" : ""} {(this.state.name) ? <Chip label={this.state.name} /> : ""}</h2>
+        <h2>{(this.state.name) ? "Add / " : ""} {(this.state.name) ? <Chip label={this.state.name} /> : ""}</h2>
+        
       </div>
+      {(this.state.category) ? this.getFakeDataDisplay() : ""}
+
+
+
     </div>
   }
 }
 
-export default withStyles(styles)(Kompetanse);
+function mapStateToProps(state) {
+  return { reduxState: state }
+}
+
+const mapDispatchToProps = {
+  getApiDataAndSetState,
+  addSkillOrProject
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Kompetanse))

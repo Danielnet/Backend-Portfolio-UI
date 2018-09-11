@@ -1,7 +1,11 @@
-import React, { Component } from 'react';
-import Divider from '@material-ui/core/Divider';
-import { withStyles } from '@material-ui/core/styles';
-import Chip from '@material-ui/core/Chip';
+import React, { Component } from 'react'
+import Divider from '@material-ui/core/Divider'
+import { withStyles } from '@material-ui/core/styles'
+import Chip from '@material-ui/core/Chip'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { getApiDataAndSetState } from '../actions'
 
 const styles = {
   circularProgress: {
@@ -10,79 +14,76 @@ const styles = {
   innerPadding: {
     padding: "30px"
   }
-};
-
-const fakeData = {
-  kompetanse: ["Html", "Css", "Javascript", "React.js", "Git Workflow"],
-  kunnskap: ["Photoshop", "UX"]
 }
 
 
 class Dashboard extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      info: "deletethisinfo"
-    }
-    const url = "https://api.github.com/users/Danielnet/repos"
-
-  }
-
-
-
-  handleErrors(response) {
-    if (!response.ok) {
-      throw Error(response.statusText);
-    }
-    return response;
-  }
-
-  getDataFromWebsite(url) {
-    let info = fetch(url)
-      .then(this.handleErrors)
-      .then(function (response) {
-        return (response.json());
-      }).catch(function (error) {
-        console.log(error);
-      }).then(json =>
-        this.setState({ info: json }))
-  }
-
 
   componentDidMount() {
-    this.props.updateTitle("Dashboard");
+
+      this.props.getApiDataAndSetState()
+    
   }
 
 
   render() {
-    const { classes } = this.props;
+    const { classes } = this.props
+    const { kompetanse } = this.props.state
+    const { kunnskap } = this.props.state
 
-    if (this.state.info) {
+    
+    if (kompetanse.length || kunnskap.length) {
       return <div className="home-content">
         <div className={classes.innerPadding}>
           <div className={classes.innermargin}>
             <h2>Kjernekompetanse</h2>
             <Divider />
             <div className={classes.innerPadding}>
-              {fakeData.kompetanse.map(
-                x => <Chip label={x} />)}
+              {kompetanse.map(
+                (x, index) => <Chip key={index} label={x} />)}
             </div>
           </div>
           <div className={classes.centered}>
             <h2>Generell Kunnskap</h2>
             <Divider />
             <div className={classes.innerPadding}>
-              {fakeData.kunnskap.map(
-                x => <Chip label={x} />)}
+              {kunnskap.map(
+                (x, index) => <Chip key={index} label={x} />)}
             </div>
           </div>
         </div>
       </div>
     }
     else
-      return <div className="home-content">
+      return <div className="home-content" style={{ textAlign: "center", display: "inherit" }}>
+        < CircularProgress />
       </div>
   }
 }
 
-export default withStyles(styles)(Dashboard);
+
+Dashboard.propTypes = {
+  classes: PropTypes.object,
+  state: PropTypes.shape({
+    kompetanse: PropTypes.arrayOf(
+      PropTypes.string
+    ),
+    kunnskap: PropTypes.arrayOf(
+      PropTypes.string
+    )
+  }
+  )
+}
+
+
+function mapStateToProps(state) {
+  return { state }
+}
+
+
+const mapDispatchToProps = {
+  getApiDataAndSetState
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Dashboard))

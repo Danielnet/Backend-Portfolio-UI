@@ -1,32 +1,33 @@
-import React, { Component,Fragment } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-
+import React, { Component } from 'react'
+import { withStyles } from '@material-ui/core/styles'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import DeleteIcon from '@material-ui/icons/Delete'
+import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import Snackbar from '@material-ui/core/Snackbar'
+import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@material-ui/icons/Close'
+import { addSkillOrProject } from '../actions'
+import { connect } from 'react-redux'
 
 const styles = theme => ({
   root: {
-    display:'flex',
-    flexDirection:'column',
-    margin:'50px',
+    display: 'flex',
+    flexDirection: 'column',
+    margin: '50px',
 
   },
   inputContainer: {
-    display:'flex',
-    flexDirection:'row',
-    alignItems:'center',
-    marginBottom:'50px'
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: '50px'
   },
   button: {
-    display:'flex',
-    alignItems:'center',
-    marginRight:'10px',
-    marginTop:'30px'
+    display: 'flex',
+    alignItems: 'center',
+    marginRight: '10px',
+    marginTop: '30px'
 
   },
   rightIcon: {
@@ -39,26 +40,26 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-     width: '98%',
+    width: '98%',
   },
   menu: {
-     width: 200,
+    width: 200,
   },
 });
 
 
 
 class Portfolio extends Component {
-constructor(props){
-  super(props);
-  this.state = {
-    headline:"Omnitech AS template",
-    _content:"Webside template utviklet for Omnitech. Siden er under arbeid, så lastetid ikke optimalisert ",
-    category: "Website",
-    _img: "http://www.omnitech.no/img/Omnilogo.png",
-    tech: ["Skeleton CSS"],
-    _link: "http://www.skalkeskjul.no/Omnitemplate/",
-    gitLink:"https://github.com/Danielnet/Websites/tree/master/Omnitech-Template"
+  constructor(props) {
+    super(props);
+    this.state = {
+      headline: "John Conway's Game Of Life",
+      _content: "Simulering basert på John Conway's Game of Life. Celle aktivitet bestemmes utifra antall naboer",
+      category: "React",
+      _img: "https://github.com/Danielnet/React-Projects/raw/master/Game-Of-Life/screenshot.png?raw=true",
+      tech: ["React","Game"],
+      _link: "https://codepen.io/Daniel-Codepen/full/QrpvbL/",
+      gitLink: "https://github.com/Danielnet/React-Projects/tree/master/Game-Of-Life"
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -72,111 +73,107 @@ constructor(props){
     });
   };
 
-  componentDidMount(){
-    this.props.updateTitle("Portfolio");
+  componentDidMount() {
   }
 
 
-  validateFormData(data){
-    if(data.headline && data._content && data.category && data._img && data.tech && data._link && data.gitLink){
+  validateFormData(data) {
+    if (data.headline && data._content && data.category && data._img && data.tech && data._link && data.gitLink) {
       return true
     }
     else
-    return false
+      return false
   }
 
 
-  submitData(e){
+  submitData(e) {
     e.preventDefault();
 
     const formData = {
 
-        headline: this.state.headline,
-        _content: this.state._content,
-        category: this.state.category,
-        _img: this.state._img,
-        tech:this.state.tech,
-        _link:this.state._link,
-        gitLink:this.state.gitLink
+      headline: this.state.headline,
+      _content: this.state._content,
+      category: this.state.category,
+      _img: this.state._img,
+      tech: this.state.tech,
+      _link: this.state._link,
+      gitLink: this.state.gitLink
     }
 
-    if(this.validateFormData(formData)){
-      this.setState({open:true})
-alert("Post Requst : " +Object.values(this.state).map(x => x));
-      }
+    if (this.validateFormData(formData)) {
+      this.setState({ open: true })
+      //alert("Post Requst : " + Object.values(this.state).map(x => x));
+      this.props.addSkillOrProject(formData)
+    }
+  }
+
+
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
     }
 
+    this.setState({ open: false });
+  };
 
-      handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-          return;
-        }
+  render() {
+    const { classes } = this.props;
+    return <div className={classes.root}>
 
-        this.setState({ open: false });
-      };
-
-  render(){
-
-
-
-const { classes } = this.props;
-
-        return <div className={classes.root}>
-
-          <h1>Add a new Project</h1>
-          <form onSubmit={this.submitData}>
-          <TextField
-            id="name"
-            label="headline"
-            className={classes.textField}
-            value={this.state.headline}
-            onChange={this.handleChange('name')}
-            margin="normal"
-          />
-          <TextField
-          id="name"
+      <h1>Add a new Project</h1>
+      <form onSubmit={this.submitData}>
+        <TextField
+          id="headline"
+          label="Headline"
+          className={classes.textField}
+          onChange={this.handleChange('headline')}
+          margin="normal"
+          value={this.state.headline}
+        />
+        <TextField
+          id="_content"
           label="Project Content"
           className={classes.textField}
           value={this.state._content}
-          onChange={this.handleChange('name')}
+          onChange={this.handleChange('_content')}
           margin="normal"
         /><TextField
-          id="name"
+          id="category"
           label="Category"
           className={classes.textField}
           value={this.state.category}
-          onChange={this.handleChange('name')}
+          onChange={this.handleChange('category')}
           margin="normal"
         /><TextField
-          id="name"
+          id="_img"
           label="Picture"
           className={classes.textField}
           value={this.state._img}
-          onChange={this.handleChange('name')}
+          onChange={this.handleChange('_img')}
           margin="normal"
         />
         <TextField
-          id="name"
+          id="tech"
           label="Tecnology"
           className={classes.textField}
           value={this.state.tech}
-          onChange={this.handleChange('name')}
+          onChange={this.handleChange('tech')}
           margin="normal"
         />
         <TextField
-          id="name"
+          id="_link"
           label="Project Link"
           className={classes.textField}
           value={this.state._link}
-          onChange={this.handleChange('name')}
+          onChange={this.handleChange('_link')}
           margin="normal"
         />
         <TextField
-          id="name"
+          id="gitLink"
           label="gitLink"
           className={classes.textField}
           value={this.state.gitLink}
-          onChange={this.handleChange('name')}
+          onChange={this.handleChange('gitLink')}
           margin="normal"
         />
 
@@ -185,13 +182,12 @@ const { classes } = this.props;
             Upload
             <CloudUploadIcon className={classes.rightIcon} />
           </Button>
-
-          <Button variant="contained" color="secondary" className={classes.button}>
+          {/* <Button variant="contained" color="secondary" className={classes.button}>
             Delete
             <DeleteIcon className={classes.rightIcon} />
-          </Button>
+          </Button> */}
         </div>
-        {/* SnackBar */}
+
 
         <Snackbar
           anchorOrigin={{
@@ -215,18 +211,25 @@ const { classes } = this.props;
               color="inherit"
               className={classes.close}
               onClick={this.handleClose}
-              >
-                <CloseIcon />
-              </IconButton>,
-            ]}
-          />
-        </form>
-
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
+      </form>
     </div>
   }
+}
 
 
+function mapStateToProps(state) {
+  return { reduxState: state }
+}
+
+const mapDispatchToProps = {
+  addSkillOrProject
 }
 
 // export default Posts;
-export default withStyles(styles)(Portfolio);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Portfolio))

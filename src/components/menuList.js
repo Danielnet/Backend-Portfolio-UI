@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -15,13 +14,16 @@ const styles = theme => ({
   selected: {
     color: 'green',
     background: 'red',
+
+    
   },
   root: {
     width: '100%',
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
-    fontWeight: '400',
-    color: 'rgba(0, 0, 0, 0.87)'
+    fontWeight:"100",
+    color: 'rgba(0, 0, 0, 0.87)',
+    fontFamily: "Roboto"
   },
 });
 
@@ -30,33 +32,33 @@ function MenuList(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <List component="nav">
-        <ListItem button component={Link} to="Dashboard">
+      <List component="nav" >
+        <ListItem button component={Link} to="Dashboard" >
           <ListItemIcon>
             <HomeOutlinedIcon />
           </ListItemIcon>
 
-          <ListItemText primary="Dashboard" disableTypography='true' />
+          <ListItemText primary="Dashboard" disableTypography={true} />
         </ListItem>
         <ListItem button component={Link} to="Kompetanse">
           <ListItemIcon >
             <ExtensionOutlinedIcon />
           </ListItemIcon>
-          <ListItemText primary="Add Skill" disableTypography='true' />
+          <ListItemText primary="Add Skill" disableTypography={true} />
         </ListItem>
 
         <ListItem button component={Link} to="Portfolio">
           <ListItemIcon >
             <CardTravel />
           </ListItemIcon>
-          <ListItemText primary="Add Project" disableTypography='true' />
+          <ListItemText primary="Add Project" disableTypography={true} />
         </ListItem>
 
-        <ListItem button component={Link} to="Tasklist">
+        <ListItem button component={Link} to="About">
           <ListItemIcon >
             <Web />
           </ListItemIcon>
-          <ListItemText primary="Tasks" disableTypography='true' />
+          <ListItemText primary="About" disableTypography={true} />
         </ListItem>
 
       </List>
@@ -67,7 +69,6 @@ function MenuList(props) {
 }
 
 MenuList.propTypes = {
-  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(MenuList);
